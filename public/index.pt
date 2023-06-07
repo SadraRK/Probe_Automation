@@ -1,0 +1,8 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Probe Automation</title>
+</head>
+    <script>window.location.replace("/index.html");</script>
+</html>

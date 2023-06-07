@@ -1,0 +1,12 @@
+.camera {
+    position: fixed;
+    right: 2px;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: None !important;
+    z-index: 999;
+}
+
+.camera_image {
+    height: 500px;
+}

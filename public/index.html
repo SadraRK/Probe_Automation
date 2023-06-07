@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<!-- suppress HtmlFormInputWithoutLabel -->
+<html class="no-js" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Probe Automation</title>
+    <!-- Favicon-->
+    <link href="apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180">
+    <link href="favicon-32x32.png" rel="icon" sizes="32x32" type="image/png">
+    <link href="favicon-16x16.png" rel="icon" sizes="16x16" type="image/png">
+    <link href="site.webmanifest" rel="manifest">
+
+    <link crossorigin="anonymous" href="https://unpkg.com/purecss@2.0.6/build/pure-min.css"
+          integrity="sha384-Uu6IeWbM+gzNVXJcM9XV3SohHtmWE+3VGi496jvgX1jyvDTXfdK+rfZc8C1Aehk5" rel="stylesheet">
+    <link href="_css/main.css" rel="stylesheet">
+</head>
+
+<body class="pure-form">
+<section class="top_bar">
+    <article>Manual Controls</article>
+</section>
+<section class="camera">
+    <!--    <img src="_lib/probe_reference.png" style="position: absolute;top: 263px;left: 29px;height: 132px;"/>-->
+    <img src="_lib/probe_reference.png" style="position: absolute;top: 272px;left: 73px;height: 131px;"/>
+    <div style="position: absolute;top: 25px;left: 350px;height: 450px;width: 1px;background-color: white"></div>
+    <img alt="Flir Camera Image" class="camera_image" src="http://localhost:8889/flir_feed">
+</section>
+
+<section class="liveInfo component" id="motorComponent">
+    <article class="title">Motor</article>
+    <section>
+        <article class="paLiveInfo" data-editable data-pa="motorX.position">X Current Position:</article>
+        <article class="paLiveInfo" data-editable data-pa="motorX.target_position">X Target Position:</article>
+        <article class="paLiveInfo" data-pa="motorX.extreme">X Move Extreme:</article>
+        <article class="paLiveInfo" data-editable data-pa="motorX.speed">X Speed:</article>
+        <br>
+        <article class="paLiveInfo" data-editable data-pa="motorY.position">Y Current Position:</article>
+        <article class="paLiveInfo" data-editable data-pa="motorY.target_position">Y Target Position:</article>
+        <article class="paLiveInfo" data-pa="motorY.extreme">Y Move Extreme:</article>
+        <article class="paLiveInfo" data-editable data-pa="motorY.speed">Y Speed:</article>
+        <br>
+        <article>
+            <button class="pure-button" name="speedUpButton">Speed Up</button>
+            <button class="pure-button" name="speedDownButton">Speed Down</button>
+        </article>
+        <br>
+        <article>Motor Key Control: <input name="motorKeyControl" type="checkbox"></article>
+        <br>
+        <article>Save Location: <input name="saveLocationName" placeholder="Name" type="text">
+            <button class="pure-button" name="saveLocationButton">Save</button>
+        </article>
+        <article>Goto: <select name="gotoLocation"></select>
+            <button class="pure-button" name="goLocationButton">Go</button>
+            <button class="pure-button" name="deleteLocationButton">Delete</button>
+        </article>
+        <article>
+            Find Nearby devices: <select name="motorDetectorChannel"></select>
+            <button class="pure-button" name="findNearbyDevice">Search</button>
+            <div name="findNearbyDeviceStatus" style="display: inline-block;color: gray;"></div>
+        </article>
+    </section>
+</section>
+<section class="liveInfo component" id="laserComponent">
+    <article class="title">Laser</article>
+    <section>
+        <article class="paLiveInfo" data-pa="laser_tsl_550.is_busy">Busy:</article>
+        <article class="paLiveInfo" data-editable data-pa="laser_tsl_550.power.status">Laser Diode:</article>
+        <article class="paLiveInfo" data-editable data-pa="laser_tsl_550.power.shutter">Laser Shutter:</article>
+        <article class="paLiveInfo" data-editable data-pa="laser_tsl_550.power.power_mw">Laser Power (mW):</article>
+        <article class="paLiveInfo" data-editable data-pa="laser_tsl_550.laser.wavelength">Laser Wavelength (nm):
+        </article>
+    </section>
+    <article class="title">Photodetector</article>
+    <section>
+        <article>
+            <select name="detectorChannel"></select>
+            <button class="pure-button" name="detectorChannelAdd">Add</button>
+            <button class="pure-button" name="detectorChannelRemove">Remove</button>
+        </article>
+        <article>
+            <input name="detectorChannelCalibrateValue" type="number">
+            <button class="pure-button" name="detectorChannelCalibrate">Calibrate</button>
+        </article>
+        <article>
+            <canvas id="laserTimeSeriesGraph"></canvas>
+        </article>
+    </section>
+</section>
+
+<section class="component" id="laserSweepComponent">
+    <article class="title">Laser Sweep</article>
+    <section>
+        <article>Name: <input name="nameOfSweep" type="text" value="com_5_5bit"></article>
+        <br>
+        <article class="subtitle">Laser</article>
+        <article>
+            Start Wavelength (nm): <input max="1630" min="1500" name="startWavelength" type="number" value="1500">
+        </article>
+        <article>
+            Stop Wavelength (nm): <input max="1630" min="1500" name="stopWavelength" type="number" value="1630">
+        </article>
+        <article>
+            Speed (nm/s): <input min="1" name="speed" step="0.1" type="number" value="100">
+        </article>
+        <article>
+            Power (mW): <input name="power" type="number" value="1">
+        </article>
+        <br>
+        <article class="subtitle">Photodetector</article>
+        <article>Input Channel: <select multiple name="inputChannels"></select></article>
+        <article>Trigger Channel: <select name="triggerChannel"></select></article>
+        <article>Gain Knob: <select data-select="[1, 10, 100, 1000, 10000]" name="gainKnob"></select></article>
+        <article>Gain: <select data-select="[1, 3]" name="gain"></select></article>
+        <article>Responsivity: <input name="responsivity" type="number" value="0.55"></article>
+        <article>Attn: <input name="attn" type="number" value="1"></article>
+        <article>Number of Samples: <input name="numberOfSamples" type="number" value="100000"></article>
+        <br>
+        <article class="subtitle">Grid <input name="laserSweepGrid" type="checkbox"></article>
+        <div id="laserSweepGridComponent">
+            <article>Step +/- in cartesian coordinate</article>
+            <article>X: <input name="laserSweepGridXSamples" type="number" value="11"></article>
+            <article>X Step: <input name="laserSweepGridXStep" type="number" value="-0.366"></article>
+            <article>Y: <input name="laserSweepGridYSamples" type="number" value="4"></article>
+            <article>Y Step: <input name="laserSweepGridYStep" type="number" value="-0.460"></article>
+            <button class="pure-button" id="laserSweepStopButton">Stop</button>
+        </div>
+        <br>
+        <button class="pure-button" id="laserSweepButton">Sweep</button>
+        <div name="laserSweepStatus" style="display: inline-block;color: gray;"></div>
+        <br>
+        <div id="laserSweepGraph"></div>
+    </section>
+</section>
+<section class="component" id="UEIDAQSweep">
+    <article class="title">Channel_0</article>
+    <section>
+        <article>Start (I): <input name="start_0" type="number" step = "0.01" value="0"></article>
+        <article>Stop (I): <input name="stop_0" type="number" step = "0.01" value="20"></article>
+        <article>Num: <input name="num_0" type="number" step = "0.01" value="0"></article>
+    </section>
+    <article class="title">Channel_1</article>
+    <section>
+        <article>Start (I): <input name="start_1" type="number" step = "0.01" value="0"></article>
+        <article>Stop (I): <input name="stop_1" type="number" step = "0.01" value="20"></article>
+        <article>Num: <input name="num_1" type="number" step = "0.01" value="0"></article>
+    </section>
+    <article class="title">Channel_2</article>
+    <section>
+        <article>Start (I): <input name="start_2" type="number" step = "0.01" value="0"></article>
+        <article>Stop (I): <input name="stop_2" type="number" step = "0.01" value="20"></article>
+        <article>Num: <input name="num_2" type="number" step = "0.01" value="0"></article>
+    </section>
+    <article class="title">Channel_3</article>
+    <section>
+        <article>Start (I): <input name="start_3" type="number" step = "0.01" value="0"></article>
+        <article>Stop (I): <input name="stop_3" type="number" step = "0.01" value="20"></article>
+        <article>Num: <input name="num_3" type="number" step = "0.01" value="0"></article>
+    </section>
+    <article class="title">Channel_4</article>
+    <section>
+        <article>Start (I): <input name="start_4" type="number" step = "0.01" value="0"></article>
+        <article>Stop (I): <input name="stop_4" type="number" step = "0.01" value="20"></article>
+        <article>Num: <input name="num_4" type="number" step = "0.01" value="0"></article>
+    </section>
+    <article class="title">Channel_5</article>
+    <section>
+        <article>Start (I): <input name="start_5" type="number" step = "0.01" value="0"></article>
+        <article>Stop (I): <input name="stop_5" type="number" step = "0.01" value="20"></article>
+        <article>Num: <input name="num_5" type="number" step = "0.01" value="0"></article>
+    </section>
+    <article class="title">Channel_6</article>
+    <section>
+        <article>Start (I): <input name="start_6" type="number" step = "0.01" value="0"></article>
+        <article>Stop (I): <input name="stop_6" type="number" step = "0.01" value="20"></article>
+        <article>Num: <input name="num_6" type="number" step = "0.01" value="0"></article>
+    </section>
+    <article class="title">Channel_7</article>
+    <section>
+        <article>Start (I): <input name="start_7" type="number" step = "0.01" value="0"></article>
+        <article>Stop (I): <input name="stop_7" type="number" step = "0.01" value="20"></article>
+        <article>Num: <input name="num_7" type="number" step = "0.01" value="0"></article>
+        <button class="pure-button" id="DAQSweepButton">Sweep with DAQ</button>
+    </section>
+</section>
+<!--<section class="component" id="keith2400SweepComponent">-->
+<!--    <article class="title">KEITH2400_A</article>-->
+<!--    <section>-->
+<!--        <article>Start (V): <input name="start_a" type="number" step = "0.1" value="0"></article>-->
+<!--        <article>Stop (V): <input name="stop_a" type="number" step = "0.1" value="3"></article>-->
+<!--        <article>Num: <input name="num_a" type="number" step = "0.1" value="0"></article>-->
+<!--    </section>-->
+<!--    <article class="title">KEITH2400_B</article>-->
+<!--    <section>-->
+<!--        <article>Start (V): <input name="start_b" type="number" step = "0.1" value="0"></article>-->
+<!--        <article>Stop (V): <input name="stop_b" type="number" step = "0.1" value="3"></article>-->
+<!--        <article>Num: <input name="num_b" type="number" step = "0.1" value="0"></article>-->
+<!--        <button class="pure-button" id="keithLaserSweepButton">Sweep with Laser and KEITH2400</button>-->
+<!--    </section>-->
+<!--</section>-->
+<section class="component" id="Dot_Product_Real_Multiplication_Setup">
+    <article class="title">Real Multiplication Setup</article>
+    <section>
+        <article>Bit Resolution: <input name="bit_res" type="number" step = "1" value="2"></article>
+        <article>Number of Trials: <input name="num_trials" type="number" step = "1" value="5"></article>
+        <article>Wavelength (nm): <input max="1630" min="1500" name="Wavelength" type="number" value="1550"></article>
+        <article>Duty Cycle: <input max="1" min="0" name="duty_cycle" type="number" step = "0.01" value="0.2"></article>
+        <article>Data length (dot product): <input name="data_length" type= "number" step = "1" value= "64"></article>
+        <button class="pure-button" id="MultiplierButton">Multiply (Homodyne)!</button>
+        <button class="pure-button" id="MultiplierButton_dotproduct">Multiply (Dot Product)!</button>
+        <button class="pure-button" id="MultiplierSweepButton">Sweep Multiplication Points!</button>
+        <button class="pure-button" id="PSTest">Test Phase Shifters!</button>
+    </section>
+</section>
+<section class="component" id="Complex_Number_Setup">
+    <article class="title">Complex Number Setup</article>
+    <section>
+        <article>Magnitude Resolution: <input name="radial_res" type="number" step = "1" value="5"></article>
+        <article>Phase Resolution: <input name="phase_res" type="number" step = "1" value="5"></article>
+        <article>Number of Trials: <input name="num_trials" type="number" step = "1" value="1"></article>
+        <article>Wavelength (nm): <input max="1630" min="1500" name="wavelength" type="number" value="1550"></article>
+        <article>Duty Cycle: <input max="1" min="0" name="duty_cycle" type="number" step = "0.01" value="0.2"></article>
+        <button class="pure-button" id="ComplexButton">Generate Complex Numbers!</button>
+    </section>
+</section>
+<section class="component" id="Random_Correlation_Detection">
+    <article class="title">Dot Product Correlation Setup</article>
+    <section>
+        <article>Number of Datapoints: <input name= "NUM" type= "number" step = "1" value= "16"></article>
+        <article>Frequency: <input name="fc" type= "number" step = "1" value= "5000"></article>
+        <article>Correlated Inputs: <input name="Corr_in" type= "text" value= "false"></article>
+        <article>Correlation Coefficient: <input name="r" type= "number" step = "0.0001" value= "0.5"></article>
+        <button class="pure-button" id="StrtCorr">Detect!</button>
+    </section>
+</section>
+</body>
+
+<script src="_js/core.js"></script>
+<script src="_js/helper.js"></script>
+<script src="_js/requestSocket.js"></script>
+
+<script src="_lib/jquery-3.5.1.js"></script>
+<script src="_lib/chart.min.js"></script>
+<script src="_lib/plotly-latest.min.js"></script>
+
+<script src="_js/liveInfo.js"></script>
+<script src="_js/motorsInterface.js"></script>
+<script src="_js/UEIDAQ.js"></script>
+<script src="_js/keith2400.js"></script>
+<script src="_js/DPUC_Multiplier.js"></script>
+<script src="_js/DPUC_Correlation.js"></script>
+<script src="_js/DPUC_Complex.js"></script>
+<script src="_js/laserSweep.js"></script>
+<script src="_js/liveLaserData.js"></script>
+
+</html>

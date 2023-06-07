@@ -1,0 +1,30 @@
+.laserSweep #laserInfo1, .laserSweep #laserInfo2 {
+    float: left;
+    width: fit-content;
+    display: inline-block;
+}
+
+.laserSweep #laserInfo2 {
+    padding-left: 32px;
+}
+
+.laserSweep #laserSweepGraph {
+    float: right;
+    display: inline-block;
+}
+
+.laserSweep #laserButtons {
+    clear: both;
+    display: block;
+    width: 100%;
+}
+
+#laserTurnOnButton, #laserTurnOnButton.disabled, #laserTurnOnButton[disabled], #laserTurnOnButton.disabled:hover, #laserTurnOnButton[disabled]:hover, #laserTurnOnButton.disabled:focus, #laserTurnOnButton[disabled]:focus {
+    background-color: red;
+    color: #fefefe;
+}
+
+#laserTurnOffButton, #laserTurnOffButton.disabled, #laserTurnOffButton[disabled], #laserTurnOffButton.disabled:hover, #laserTurnOffButton[disabled]:hover, #laserTurnOffButton.disabled:focus, #laserTurnOffButton[disabled]:focus {
+    background-color: green;
+    color: #fefefe;
+}

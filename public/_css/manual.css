@@ -1,0 +1,40 @@
+.component {
+    padding-bottom: 10px;
+}
+
+.component article {
+    padding-left: 12px;
+}
+
+.component > section {
+    border-bottom: 1px solid #00000044;
+    padding-bottom: 12px;
+    margin-bottom: 8px;
+}
+
+.component > article.title {
+    font-size: 1.5em;
+    font-style: italic;
+    padding-bottom: 8px;
+    padding-top: 10px;
+}
+
+.component article.subtitle {
+    font-size: 1.1em;
+    text-decoration: underline;
+    width: 100%;
+    padding-top: 14px;
+    padding-bottom: 4px;
+}
+
+.component input, .component select {
+    width: 200px;
+    display: inline-block;
+    margin: 2px;
+    margin-left: 5px;
+    height: unset;
+}
+
+.component input[type="checkbox"] {
+    width: 20px;
+}

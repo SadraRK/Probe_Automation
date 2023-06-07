@@ -1,0 +1,8 @@
+.liveInfo .paLiveInfoPre, .liveInfo .paJSInfoPre {
+    display: inline;
+    padding-left: 10px;
+}
+
+.liveInfo .paLiveInfoInput, .liveInfo .paJSInfoInput {
+    display: none;
+}

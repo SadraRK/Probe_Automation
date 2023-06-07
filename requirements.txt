@@ -1,0 +1,12 @@
+./_lib/spinnaker_python-2.0.0.146-cp38-cp38-win_amd64.whl
+numpy
+matplotlib
+opencv-python
+unsync
+pyramid
+websockets
+nidaqmx
+PyVISA
+pyspin
+pyramid_chameleon
+scipy
